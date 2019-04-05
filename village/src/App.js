@@ -66,6 +66,7 @@ class App extends Component {
           render={props => (
             <Smurfs
               {...props} 
+              killSmurf={this.killSmurf}
               smurfs={this.state.smurfs}
               key={this.state.smurfs.id}
             />
@@ -87,11 +88,3 @@ class App extends Component {
 }
 
 export default App;
-
-{/* <div className="App">
-<SmurfForm addSmurf={this.addSmurf} key={this.state.smurfs.id} />
-<Smurfs 
-  smurfs={this.state.smurfs} 
-  killSmurf={this.killSmurf} 
-  key={this.state.smurfs.id} />
-</div> */}
