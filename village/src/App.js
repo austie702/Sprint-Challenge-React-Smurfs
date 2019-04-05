@@ -16,8 +16,12 @@ class App extends Component {
   componentDidMount() {
     axios
     .get('http://localhost:3333/smurfs')
-        .then(res => this.setState({ smurfs: res.data }))
-        .catch(err => {console.log(err)})
+        .then(res => {
+          this.setState({ smurfs: res.data })
+        })
+        .catch(err => {
+          console.log(err)
+        })
   }
   
   addSmurf = (smurf) => {
@@ -29,16 +33,25 @@ class App extends Component {
       })
       .catch(err => console.log(err))
   }
+
+  killSmurf = (id) => {
+    console.log('app > killSmurf() called')
+    axios
+      .delete(`http://localhost:3333/smurfs/${id}`)
+      .then(res => {
+        this.setState({ smurfs: res.data })
+      })
+      .catch(err => console.log('Failed Attempted Murder'));
+  }
   
-  // add any needed code to ensure that the smurfs collection exists on state and it has data coming from the server
-  // Notice what your map function is looping over and returning inside of Smurfs.
-  // You'll need to make sure you have the right properties on state and pass them down to props.
   render() {
-    console.log(this.state.smurfs);
     return (
       <div className="App">
-        <SmurfForm addSmurf={this.addSmurf} />
-        <Smurfs smurfs={this.state.smurfs} />
+        <SmurfForm addSmurf={this.addSmurf} key={this.state.smurfs.id} />
+        <Smurfs 
+          smurfs={this.state.smurfs} 
+          killSmurf={this.killSmurf} 
+          key={this.state.smurfs.id} />
       </div>
     );
   }
