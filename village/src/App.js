@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, NavLink, withRouter } from 'react-router-dom';
 import axios from 'axios';
-
-import './App.css';
-import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
+import SmurfForm from './components/SmurfForm';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -47,14 +48,50 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SmurfForm addSmurf={this.addSmurf} key={this.state.smurfs.id} />
-        <Smurfs 
-          smurfs={this.state.smurfs} 
-          killSmurf={this.killSmurf} 
-          key={this.state.smurfs.id} />
+        <nav>
+          <div>
+            <NavLink exact to='/'>
+              Home
+            </NavLink>
+            <NavLink exact to='/smurfs'>
+              Smurfs
+            </NavLink>
+            <NavLink exact to='/smurf-form'>
+              Add Smurf Form
+            </NavLink>
+          </div>
+        </nav>
+        <Route
+          exact path='/smurfs'
+          render={props => (
+            <Smurfs
+              {...props} 
+              smurfs={this.state.smurfs}
+              key={this.state.smurfs.id}
+            />
+          )}
+        />
+        <Route
+          exact path='/smurf-form'
+          render={props => (
+            <SmurfForm
+            {...props}
+            addSmurf={this.addSmurf}
+            key={this.state.smurfs.id}
+          />
+          )}
+        />
       </div>
     );
   }
 }
 
 export default App;
+
+{/* <div className="App">
+<SmurfForm addSmurf={this.addSmurf} key={this.state.smurfs.id} />
+<Smurfs 
+  smurfs={this.state.smurfs} 
+  killSmurf={this.killSmurf} 
+  key={this.state.smurfs.id} />
+</div> */}
